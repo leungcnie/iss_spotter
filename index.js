@@ -1,5 +1,20 @@
 // index.js
-const { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes } = require('./iss');
+const { nextISSTimesForMyLocation } = require('./iss');
+
+nextISSTimesForMyLocation((error, passTimes) => {
+  if (error) {
+    return console.log("It didn't work!", error);
+  }
+  // success, print out the deets!
+  for (const pass of passTimes) {
+    // let ms = pass.risetime * 1000; // times by 1000 to get milliseconds
+    // let date = new Date(ms).toString();
+    let date = new Date(0);
+    date.setUTCSeconds(pass.risetime);
+    let duration = pass.duration;
+    console.log(`Next pass at ${date} for ${duration} seconds!`);
+  }
+});
 
 // SPOTTER I
 // fetchMyIP((error, ip) => {
